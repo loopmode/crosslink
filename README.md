@@ -37,7 +37,7 @@ Thanks to yarn workspaces, each package can access its siblings already: Any cli
 
 Now consider that `/my-app/.crosslink` contains this:
 
-```
+```javascript
 workspaces/common/packages/* -> workspaces/client/node_modules
 workspaces/common/packages/* -> workspaces/server/node_modules
 ```
@@ -69,10 +69,10 @@ Each workspace should have a snappy name that is also used as the scope for all 
 
 You basically have one more level in the high-level hierarchy:
 
-```
-project
-project - workspace
-project - workspace - package
+```javascript
+project;
+project - workspace;
+project - workspace - package;
 ```
 
 Consider `project` being the "outer" project that contains several smaller projects.
@@ -86,7 +86,7 @@ so don't bother with `hyper-server`, just call it `server` and enjoy shorter imp
 
 If you do plan to publish some of your packages, then you should probably use more concise scope names.
 
-```
+```javascript
 import { Str } from '@server/utils';
 // vs
 import { Str } from '@hyper-server/utils';
@@ -96,7 +96,7 @@ import { Str } from '@hyper-server/utils';
 
 Install it as a global tool or as a dependency in your project.
 
-```
+```javascript
 # global install
 npm install --global crosslink
 
@@ -112,7 +112,7 @@ Or don't install at all and use `npx` instead (available since npm@5.2.0).
 
 The default command will run with default settings, look for definitions and try to create symlinks.
 
-```
+```javascript
 # basic command: "run in the current directory, it has a .crosslink file with definitions"
 crosslink
 
@@ -153,13 +153,13 @@ $ crosslink --help
 
 The link command takes one definition and executes it in the current directory. Make sure to wrap your definition in quotes.
 
-```
+```javascript
 crosslink link "./a/* -> ../b"
 ```
 
 See `crosslink link --help` for an overview:
 
-```
+```javascript
 $ crosslink link --help
 
   Usage: link [options] <definition>
@@ -188,13 +188,13 @@ Runnin `crosslink` against such a file is basically the same as calling a bunch 
 An instruction is a string in the format `sourceGlob->targetGlob`: it consists of two globs combined with a dash and an arrow.
 Any glob pattern supported by [glob](http://npmjs.com/package/glob) should work.
 
-- The left-hand side will pick directories that contain a `package.json` file.
-- The right-hand side will pick target directories, in which to create symlinks for all left-hand matches.
-  - Missing folder structures will be created, e.g. `a/* -> b/sub/node_modules` works even when there is no `b` folder yet
+-   The left-hand side will pick directories that contain a `package.json` file.
+-   The right-hand side will pick target directories, in which to create symlinks for all left-hand matches.
+    -   Missing folder structures will be created, e.g. `a/* -> b/sub/node_modules` works even when there is no `b` folder yet
 
 Consider this folder structure:
 
-```
+```javascript
 $ find .
 .
 ./a
@@ -209,7 +209,7 @@ $ find .
 
 Now we run `crosslink link` with a single instruction:
 
-```
+```javascript
 $ crosslink link "./a/*->./b"
 [crosslink] created: D:/Projects/npm/crosslink/examples/simple/a/bar → D:\Projects\npm\crosslink\examples\simple\b\@a\bar
 [crosslink] created: D:/Projects/npm/crosslink/examples/simple/a/foo → D:\Projects\npm\crosslink\examples\simple\b\@a\foo
@@ -217,19 +217,12 @@ $ crosslink link "./a/*->./b"
 
 The result is that we have symlinks to `a/foo` and `a/bar`, but not to `a/baz` because it had no `package.json` file:
 
-```
-a/
-a/foo/
-a/foo/package.json
-a/bar/
-a/bar/package.json
-a/baz/
-a/baz/baz.txt
-b/
-b/foo/
-b/foo/package.json
-b/bar/
-b/bar/package.json
+```javascript
+a / a / foo / a / foo / package.json;
+a / bar / a / bar / package.json;
+a / baz / a / baz / baz.txt;
+b / b / foo / b / foo / package.json;
+b / bar / b / bar / package.json;
 ```
 
 ## Textfile
@@ -263,6 +256,6 @@ crosslink doesn't mind - it's just a json file with the required property.
 
 In this example, we choose to have a "symlinks" property in our `package.json`. We can then run:
 
-```
+```javascript
 crosslink -f package.json -p symlinks
 ```
