@@ -5,6 +5,10 @@ Useful for combining multiple yarn workspaces.
 
 Supports scoped package names.
 
+## Example
+
+Check out https://github.com/loopmode/crosslink-example for a somewhat realistic example.
+
 ## Use case
 
 Allows you to use a project setup like this:
