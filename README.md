@@ -155,8 +155,8 @@ $ crosslink --help
 
 The link command takes one definition and executes it in the current directory. Make sure to wrap your definition in quotes.
 
-```javascript
-crosslink link "./a/* -> ../b"
+```
+ link "./a/* -> ../b"
 ```
 
 See `crosslink link --help` for an overview:
@@ -211,7 +211,7 @@ $ find .
 
 Now we run `crosslink link` with a single instruction:
 
-```javascript
+```
 $ crosslink link "./a/*->./b"
 [crosslink] created: D:/Projects/npm/crosslink/examples/simple/a/bar → D:\Projects\npm\crosslink\examples\simple\b\@a\bar
 [crosslink] created: D:/Projects/npm/crosslink/examples/simple/a/foo → D:\Projects\npm\crosslink\examples\simple\b\@a\foo
@@ -231,7 +231,7 @@ b / bar / b / bar / package.json;
 
 If `.crosslink` is a textfile, place one instruction per line, and you're good to go:
 
-```javascript
+```
 common/packages/* -> client/node_modules
 common/packages/* -> server/node_modules
 ```
@@ -240,7 +240,7 @@ common/packages/* -> server/node_modules
 
 If `.crosslink` is a json file, place a `"crosslink"` array of instructions in it
 
-```javascript
+```
 {
     "crosslink": [
         "common/packages/* -> client/node_modules",
