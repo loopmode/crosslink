@@ -67,7 +67,7 @@ async function ensureSymlink(source, target) {
     }
     if (!exists) {
         try {
-            const link = await lstat(target);
+            const link = await readlink(target);
             exists = !!link;
         } catch (error) {
             /* silent fail */
