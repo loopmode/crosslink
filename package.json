@@ -1,5 +1,5 @@
 {
-  "version": "0.0.5",
+  "version": "0.0.6",
   "name": "@loopmode/crosslink",
   "license": "MIT",
   "author": "Jovica Aleksic <jovica.aleksic@loopmode.de>",
@@ -12,7 +12,7 @@
   "scripts": {
     "lint": "eslint src",
     "prepublishOnly": "yarn lint && rm -rf lib/* && yarn build",
-    "build": "babel src --out-dir lib"
+    "build": "babel src --out-dir lib --presets=@babel/env --plugins=@babel/plugin-syntax-export-default-from,transform-export-extensions,@babel/plugin-transform-async-to-generator"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.49",
