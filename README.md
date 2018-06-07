@@ -98,13 +98,15 @@ Install it as a global tool or as a dependency in your project.
 
 ```javascript
 # global install
-npm install --global crosslink
+npm install -g @loopmode/crosslink
 
 # just in this project
-yarn add crosslink --dev
+yarn add @loopmode/crosslink --dev
 ```
 
 Or don't install at all and use `npx` instead (available since npm@5.2.0).
+Unfortunately, when using `npx` you must specify the full scope, aka `npx @loopmode/crosslink`.
+If you install globally, you will be able to use `crosslink` directly without the scope.
 
 # Usage
 
@@ -174,7 +176,7 @@ $ crosslink link --help
      definition                  A definition in the format source->target
 ```
 
-Create a `.crosslink` file or add a `"crosslink"` array in your package.json, then run `npx crosslink` in the directory.
+Create a `.crosslink` file or add a `"crosslink"` array in your package.json, then run `npx @loopmode/crosslink` in the directory.
 
 ## The `.crosslink` file
 
