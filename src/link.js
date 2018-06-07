@@ -43,19 +43,66 @@ export default async function link(definition, { cwd, dryRun = false } = {}) {
             }
 
             if (dryRun) {
-                // const drySource = path.resolve(source.dirname);
-                // let dryTarget = path.resolve(target + '/' + source.name);
                 console.log('[crosslink] dryRun:', source.dirname, '→', target);
             } else {
                 try {
-                    await fs.ensureSymlink(source.dirname, target);
-                    console.log('[crosslink] symlink:', source.dirname, '→', target);
+                    await ensureSymlink(source.dirname, target);
                 } catch (error) {
                     console.warn(error);
                 }
             }
         }
     }
+}
+
+async function ensureSymlink(source, target) {
+    let exists = fs.existsSync(target);
+    if (!exists) {
+        try {
+            const stats = await lstat(target);
+            exists = !!stats;
+        } catch (error) {
+            /* silent fail */
+        }
+    }
+    if (!exists) {
+        try {
+            const link = await lstat(target);
+            exists = !!link;
+        } catch (error) {
+            /* silent fail */
+        }
+    }
+
+    if (exists) {
+        console.log('[crosslink] found:', source, '→', target);
+    } else {
+        fs.symlinkSync(source, target, 'junction');
+        console.log('[crosslink] created:', source, '→', target);
+    }
+}
+
+function lstat(target) {
+    return new Promise((resolve, reject) => {
+        fs.lstat(target, (error, stats) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+            resolve(stats);
+        });
+    });
+}
+function readlink(target) {
+    return new Promise((resolve, reject) => {
+        fs.readlink(target, (error, linkString) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+            resolve(linkString);
+        });
+    });
 }
 
 async function getValidSources(sources) {
