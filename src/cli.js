@@ -14,13 +14,13 @@ let runDefault = true;
 // ----------------------------------------
 //
 // default command
-// cross-link ./target
+// crosslink ./target
 //
 // ----------------------------------------
 program
     .usage('[target]')
-    .option('-f, --filename [filename]', 'specify name of definition files', '.cross-link')
-    .option('-p, --propname [propname]', 'specify name of property in JSON definitions', 'cross-link')
+    .option('-f, --filename [filename]', 'specify name of definition files', '.crosslink')
+    .option('-p, --propname [propname]', 'specify name of property in JSON definitions', 'crosslink')
     .option('-r, --recursive [recursive]', 'scan for definition files recursively', false)
     .option('-d, --dry [dry]', 'perform a dry run and report, do not create symlinks', false)
     .on('--help', () => {
@@ -33,7 +33,7 @@ program
 // ----------------------------------------
 //
 // link command
-// cross-link link ./a/*->./b
+// crosslink link ./a/*->./b
 //
 // ----------------------------------------
 program
@@ -68,11 +68,11 @@ async function run(target) {
     try {
         definitionFiles = await glob(targetGlob);
     } catch (error) {
-        console.warn('[cross-link] Unable to resolve glob', targetGlob);
+        console.warn('[crosslink] Unable to resolve glob', targetGlob);
     }
 
     if (definitionFiles.length === 0) {
-        console.warn('[cross-link] No definition files found for', targetGlob);
+        console.warn('[crosslink] No definition files found for', targetGlob);
     }
 
     for (let file of definitionFiles) {
@@ -83,7 +83,7 @@ async function run(target) {
                 propname: program.propname
             });
         } catch (error) {
-            console.warn('[cross-link] Unable to bootstrap', file);
+            console.warn('[crosslink] Unable to bootstrap', file);
         }
     }
 }

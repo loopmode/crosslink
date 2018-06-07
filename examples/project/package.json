@@ -4,10 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "setup": "cross-link .",
+    "setup": "crosslink .",
     "wipe": "find . -name node_modules -type d -exec rm -rf '{}' +"
   },
   "dependencies": {
-    "cross-link": "file:../.."
+    "crosslink": "file:../.."
   }
 }

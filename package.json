@@ -1,12 +1,12 @@
 {
   "version": "0.0.1",
-  "name": "cross-link",
+  "name": "@loopmode/crosslink",
   "license": "MIT",
   "author": "Jovica Aleksic <jovica.aleksic@loopmode.de>",
-  "repository": "github:loopmode/cross-link",
+  "repository": "github:loopmode/crosslink",
   "description": "creates symlinks across workspaces",
   "bin": {
-    "cross-link": "./lib/index.js"
+    "crosslink": "./lib/index.js"
   },
   "main": "lib/index.js",
   "scripts": {
