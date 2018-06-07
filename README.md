@@ -34,7 +34,6 @@ Allows you to use a project setup like this:
 /my-app/workspaces/common/packages/
 /my-app/workspaces/common/packages/common-api
 /my-app/workspaces/common/packages/common-utils
-...
 ```
 
 Thanks to yarn workspaces, each package can access its siblings already: Any client package can require any other client package, any server package can require any other server package, etc.
