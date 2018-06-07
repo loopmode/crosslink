@@ -48,12 +48,8 @@ export default async function link(definition, { cwd, dryRun = false } = {}) {
                 console.log('[crosslink] dryRun:', source.dirname, '→', target);
             } else {
                 try {
-                    if (fs.existsSync(target)) {
-                        console.log('[crosslink] found:', source.dirname, '→', target);
-                    } else {
-                        fs.symlinkSync(source.dirname, target, 'junction');
-                        console.log('[crosslink] created:', source.dirname, '→', target);
-                    }
+                    await fs.ensureSymlink(source.dirname, target);
+                    console.log('[crosslink] symlink:', source.dirname, '→', target);
                 } catch (error) {
                     console.warn(error);
                 }
