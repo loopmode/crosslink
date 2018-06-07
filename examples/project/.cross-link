@@ -1,0 +1,2 @@
+workspaces/common/packages/* -> workspaces/client/node_modules
+workspaces/common/packages/*->workspaces/server/node_modules

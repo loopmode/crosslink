@@ -1,0 +1,36 @@
+{
+    "parser": "babel-eslint",
+    "parserOptions":
+    {
+        "ecmaVersion": 7,
+        "sourceType": "module"
+    },
+    "env":
+    {
+        "node": true
+    },
+    "extends": [ "prettier" ],
+    "plugins": [ "import", "prettier"],
+    "settings": {
+        "import/ignore": ["node_modules"]
+    },
+    "rules": {
+        "import/no-unresolved": [
+            2,
+            {
+                "commonjs": true,
+                "amd": true
+            }
+        ],
+        "no-undef": 2,
+        "no-unused-vars": [1, { "ignoreRestSiblings": true }],
+        "import/named": 2,
+        "import/namespace": 2,
+        "import/default": 2,
+        "import/export": 2,
+        "import/no-named-as-default": 0
+    },
+    "globals": {
+        "Promise": true
+    }
+}

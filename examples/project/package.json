@@ -1,0 +1,13 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "setup": "cross-link .",
+    "wipe": "find . -name node_modules -type d -exec rm -rf '{}' +"
+  },
+  "dependencies": {
+    "cross-link": "file:../.."
+  }
+}
