@@ -1,6 +1,6 @@
 # 0.2.1
 
--   Use custom ensureSymlink
+-   Use custom `ensureSymlink`
 
 # 0.2.0
 
