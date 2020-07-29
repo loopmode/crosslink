@@ -19,9 +19,10 @@ let runDefault = true;
 // ----------------------------------------
 program
     .usage('[target]')
-    .option('-f, --filename [filename]', 'specify name of definition files', '.crosslink')
+    .option('-f, --filename [filename]', 'specify name of definition files', '{.crosslink,package.json}')
     .option('-p, --propname [propname]', 'specify name of property in JSON definitions', 'crosslink')
     .option('-r, --recursive [recursive]', 'scan for definition files recursively', false)
+    .option('-o, --overwrite [overwrite]', 'overwrite existing target', false)
     .option('-d, --dry [dry]', 'perform a dry run and report, do not create symlinks', false)
     .on('--help', () => {
         console.log('');
@@ -38,6 +39,7 @@ program
 // ----------------------------------------
 program
     .command('link <definition>')
+    .option('-o, --overwrite [overwrite]', 'overwrite existing target', false)
     .option('-d, --dry [dry]', 'perform a dry run and report, do not create symlinks', false)
     .on('--help', () => {
         console.log('');
@@ -47,7 +49,7 @@ program
     })
     .action(definition => {
         runDefault = false;
-        link(definition, { cwd: getCwd(), dryRun: program.dry });
+        link(definition, { cwd: getCwd(), dryRun: program.dry, overwrite: program.overwrite });
     });
 
 program.parse(process.argv);
@@ -80,7 +82,8 @@ async function run(target) {
             await bootstrap(path.resolve(file), {
                 cwd: path.dirname(path.resolve(file)),
                 dryRun: program.dry,
-                propname: program.propname
+                propname: program.propname,
+                overwrite: program.overwrite
             });
         } catch (error) {
             console.warn('[crosslink] Unable to bootstrap', file);

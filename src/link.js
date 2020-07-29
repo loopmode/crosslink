@@ -1,8 +1,10 @@
 import glob from 'glob-promise';
 import path from 'path';
 import fs from 'fs-extra';
+import rimraf from 'rimraf';
+import promise from 'glob-promise';
 
-export default async function link(definition, { cwd, dryRun = false } = {}) {
+export default async function link(definition, { cwd, dryRun = false, overwrite = false } = {}) {
     definition = definition.replace(/ -> /, '->');
 
     let [fromDef, targetDef] = definition.split('->');
@@ -46,7 +48,7 @@ export default async function link(definition, { cwd, dryRun = false } = {}) {
                 console.log('[crosslink] dryRun:', source.dirname, '→', target);
             } else {
                 try {
-                    await ensureSymlink(source.dirname, target);
+                    await ensureSymlink(source.dirname, target, overwrite);
                 } catch (error) {
                     console.warn(error);
                 }
@@ -55,7 +57,7 @@ export default async function link(definition, { cwd, dryRun = false } = {}) {
     }
 }
 
-async function ensureSymlink(source, target) {
+async function ensureSymlink(source, target, overwrite) {
     let exists = fs.existsSync(target);
     if (!exists) {
         try {
@@ -75,11 +77,29 @@ async function ensureSymlink(source, target) {
     }
 
     if (exists) {
-        console.log('[crosslink] found:', source, '→', target);
-    } else {
-        fs.symlinkSync(source, target, 'junction');
-        console.log('[crosslink] created:', source, '→', target);
+        if (overwrite) {
+            await rm(target)
+        } else {
+            console.log(`[crosslink] exists: ${source} → ${target}`);
+            console.log(`[crosslink] You can use the --overwrite option (or -o)`);
+        }
     }
+
+    fs.symlinkSync(source, target, 'junction');
+    console.log('[crosslink] created:', source, '→', target);
+}
+
+function rm(target) {
+    return new Promise((resolve, reject) => {
+        rimraf(target, error => {
+            if (error) {
+                reject(error)
+            }
+            else {
+                resolve()
+            }
+        })
+    })
 }
 
 function lstat(target) {

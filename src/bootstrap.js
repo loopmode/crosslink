@@ -3,9 +3,12 @@ import fs from 'fs-extra';
 
 import link from './link';
 
-export default async function bootstrap(file, { cwd = process.cwd(), dryRun = false, propname } = {}) {
+export default async function bootstrap(
+    file,
+    { cwd = process.cwd(), dryRun = false, propname, overwrite = false } = {}
+) {
     if (!file) {
-        throw new Error('No definitioons file specified');
+        throw new Error('No definitions file specified');
     }
     if (!fs.existsSync(path.resolve(file))) {
         throw new Error('Definitions file not found');
@@ -21,7 +24,7 @@ export default async function bootstrap(file, { cwd = process.cwd(), dryRun = fa
     }
 
     for (let def of definitions) {
-        link(def, { cwd, dryRun });
+        link(def, { cwd, dryRun, overwrite });
     }
 }
 

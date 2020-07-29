@@ -1,3 +1,8 @@
+# 0.3.0
+
+-  Support `package.json` as definitions file by default
+-  Support `--overwrite` param to remove existing target
+
 # 0.2.1
 
 -   Use custom `ensureSymlink`
