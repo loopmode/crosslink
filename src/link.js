@@ -2,7 +2,6 @@ import glob from 'glob-promise';
 import path from 'path';
 import fs from 'fs-extra';
 import rimraf from 'rimraf';
-import promise from 'glob-promise';
 
 export default async function link(definition, { cwd, dryRun = false, overwrite = false } = {}) {
     definition = definition.replace(/ -> /, '->');
